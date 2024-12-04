@@ -1,7 +1,9 @@
-export default function RootPage() {
+import ProductsGrid from '@/app/_components/products/ProductsGrid'
+
+export default function Home() {
   return (
-    <div>
-      <h1>RootPage</h1>
+    <div className='h-full w-full'>
+      <ProductsGrid />
     </div>
   )
 }
