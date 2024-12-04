@@ -1,0 +1,46 @@
+{
+  "auxiliaries": [
+    {
+      "id": "1",
+      "first_name": "Julianator",
+      "last_name": "Rendoughnut",
+      "email": "julian.rendon@funmail1.com"
+    },
+    {
+      "id": "2",
+      "first_name": "Samurai",
+      "last_name": "Galindorf",
+      "email": "samuel.galindo@funmail2.com"
+    },
+    {
+      "id": "3",
+      "first_name": "Nicoverse",
+      "last_name": "Herrmazing",
+      "email": "nicolas.herrera@funmail1.com"
+    },
+    {
+      "id": "4",
+      "first_name": "JuanTechie",
+      "last_name": "Lozen",
+      "email": "juan.loaiza@funmail2.com"
+    },
+    {
+      "id": "5",
+      "first_name": "Sebasaurus",
+      "last_name": "Moozical",
+      "email": "sebastian.munoz@funmail1.com"
+    },
+    {
+      "id": "6",
+      "first_name": "JohnFreDroid",
+      "last_name": "Belalvator",
+      "email": "john.freddy@funmail2.com"
+    },
+    {
+      "id": "7",
+      "first_name": "Santastic",
+      "last_name": "Dukeeper",
+      "email": "santiago.duque@funmail3.com"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "brands": [
+    {
+      "id": 1,
+      "name": "Chayomi",
+      "description": "Description of Brand 1"
+    },
+    {
+      "id": 2,
+      "name": "Cheemsung",
+      "description": "Description of Brand 2"
+    },
+    {
+      "id": 3,
+      "name": "Appie",
+      "description": "Description of Brand 3"
+    },
+    {
+      "id": 4,
+      "name": "Buggle",
+      "description": "Description of Brand 4"
+    },
+    {
+      "id": 5,
+      "name": "Lokia",
+      "description": "Description of Brand 5"
+    },
+    {
+      "id": 6,
+      "name": "Motoreel",
+      "description": "Description of Brand 6"
+    }
+  ]
+}
