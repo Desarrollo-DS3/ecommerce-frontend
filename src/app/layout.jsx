@@ -2,7 +2,7 @@ import './globals.css'
 import { FiltersProvider } from '@/app/_contexts/filters'
 // import Navbar from '@/app/_components/ui/Navbar'
 // import Sidebar from '@/app/_components/ui/sidebar/Sidebar'
-// import LoginModal from '@/app/_components/form/LoginModal'
+import LoginModal from '@/app/_components/form/LoginModal'
 import { AuthProvider } from './_contexts/auth'
 
 export const metadata = {
@@ -17,8 +17,8 @@ export default function RootLayout({ children }) {
         <AuthProvider>
           <FiltersProvider>
             {/* <Navbar />
-            <Sidebar />
-            <LoginModal /> */}
+            <Sidebar /> */}
+            <LoginModal />
             {children}
           </FiltersProvider>
         </AuthProvider>
