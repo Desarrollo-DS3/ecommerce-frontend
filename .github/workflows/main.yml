@@ -3,7 +3,7 @@ name: Test and Build App
 on:
   pull_request:
     branches:
-      - master
+      - main
       - develop
 
 jobs:
