@@ -14,6 +14,7 @@ export default function Sidebar() {
           <div className='relative w-64 bg-gray-900 text-white py-24 px-6 shadow-md'>
             {/* Botón de cierre */}
             <button
+              testid='close-button'
               onClick={() => setIsOpen(false)}
               className='absolute top-4 right-4 bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700 transition'
             >
