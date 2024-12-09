@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react'
 import ProductCard from '@/app/_components/products/ProductCard'
-import { useRouter } from 'next/router'
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn()
@@ -11,7 +10,7 @@ describe('ProductCard', () => {
     id: 1,
     name: 'Test Product',
     thumbnail: '/test-thumbnail.jpg',
-    categoryId: 'Category 1',
+    category: { name: 'Category 1' },
     price: 100
   }
 
