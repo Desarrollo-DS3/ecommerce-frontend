@@ -7,8 +7,14 @@ import {
 } from '@/app/_utils/transformers/authTransformers'
 
 export const login = async (data) => {
-  const response = await api.post('/auth/login', data)
-  return transformLoginResponse(response.data)
+  try {
+    const response = await api.post('/auth/login', data)
+    console.log('[auth.js] login response: ', response)
+    return transformLoginResponse(response.data)
+  } catch (error) {
+    console.error('[auth.js] Error en login:', error)
+    throw new Error('Error al iniciar sesión. Por favor, intenta nuevamente.')
+  }
 }
 
 export const registerUser = async (data) => {
