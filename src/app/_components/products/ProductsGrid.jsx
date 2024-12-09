@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { useFilters } from '@/app/_hooks/useFilters'
-import { loadProducts } from '@/app/_api/stock'
+import { listProducts } from '@/app/_api/stock'
 import LoadingOverlay from '@/app/_components/ui/LoadingOverlay'
 import ProductCard from '@/app/_components/products/ProductCard'
 import Pagination from '@/app/_components/ui/Pagination'
@@ -16,7 +16,7 @@ export default function ProductsGrid() {
   const { filterProducts } = useFilters()
 
   useEffect(() => {
-    loadProducts().then((data) => {
+    listProducts().then((data) => {
       setProducts(data)
       setIsLoading(false)
     })
