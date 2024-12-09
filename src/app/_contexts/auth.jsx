@@ -6,24 +6,25 @@ import { useRouter } from 'next/navigation'
 import { login as apiLogin } from '@/app/_api/auth'
 
 const ACCESS_TOKEN = 'frontend_access_token'
+const USER_ROLE = 'frontend_user_role'
 
-// 1. Crear el contexto de autenticación
 export const AuthContext = createContext()
 
-// 2. Crear el proveedor de autenticación
 export function AuthProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [token, setToken] = useState(null)
   const [user, setUser] = useState(null)
+  const [role, setRole] = useState(null)
   const router = useRouter()
 
-  // Verificar si el usuario ya está autenticado al cargar la aplicación
   useEffect(() => {
     const storedToken = Cookies.get(ACCESS_TOKEN)
+    const storedRole = Cookies.get(USER_ROLE)
+
     if (storedToken) {
       setIsLoggedIn(true)
       setToken(storedToken)
-      // TODO: Obtener información extra del usuario
+      setRole(storedRole || null)
     } else {
       setIsLoggedIn(false)
     }
@@ -36,24 +37,44 @@ export function AuthProvider({ children }) {
         return
       }
 
-      const response = await apiLogin({ email, password })
-      const { access_token, user: userInfo } = response
+      const {
+        token: accessToken,
+        user: userInfo,
+        role: userRole
+      } = await apiLogin({
+        email,
+        password
+      })
+
+      if (!accessToken || !userRole) {
+        setLoginError('Error al procesar la respuesta del servidor.')
+        return
+      }
 
       setIsLoggedIn(true)
-      setToken(access_token.access)
+      setToken(accessToken)
       setUser(userInfo)
-      Cookies.set(ACCESS_TOKEN, access_token.access, {
+      setRole(userRole)
+
+      Cookies.set(ACCESS_TOKEN, accessToken, {
         path: '/',
         secure: true,
         sameSite: 'strict',
         expires: 365 * 5
       })
 
-      console.log('Inicio de sesión exitoso:', response)
+      Cookies.set(USER_ROLE, userRole, {
+        path: '/',
+        secure: true,
+        sameSite: 'strict',
+        expires: 365 * 5
+      })
+
+      console.log('Inicio de sesión exitoso:', { accessToken, userRole })
       router.push('/')
     } catch (error) {
       setLoginError('Credenciales incorrectas. Intenta nuevamente.')
-      console.error(error)
+      console.error('[authContext] Error en login:', error)
     }
   }
 
@@ -61,17 +82,17 @@ export function AuthProvider({ children }) {
     setIsLoggedIn(false)
     setToken(null)
     setUser(null)
+    setRole(null)
     Cookies.remove(ACCESS_TOKEN)
+    Cookies.remove(USER_ROLE)
     router.push('/')
   }
 
-  const isAuthenticated = () => {
-    return Boolean(Cookies.get(ACCESS_TOKEN))
-  }
+  const isAuthenticated = () => Boolean(Cookies.get(ACCESS_TOKEN))
 
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn, token, user, login, logout, isAuthenticated }}
+      value={{ isLoggedIn, token, user, role, login, logout, isAuthenticated }}
     >
       {children}
     </AuthContext.Provider>

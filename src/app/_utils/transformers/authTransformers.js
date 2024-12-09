@@ -1,8 +1,9 @@
 export const transformLoginResponse = (responseData) => {
-  return {
-    token: responseData.token || null,
-    user: responseData.user || null
-  }
+  const token = responseData?.access_token?.access || null
+  const user = responseData?.access_token?.user || null
+  const role = user?.role || null
+
+  return { token, user, role }
 }
 
 export const transformRegisterUserResponse = (responseData) => {

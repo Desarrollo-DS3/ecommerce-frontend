@@ -1,4 +1,3 @@
-// [src/__test__/app/_utils/transformers/authTransformers.test.js]
 import {
   transformLoginResponse,
   transformRegisterUserResponse,
@@ -8,18 +7,31 @@ import {
 
 describe('authTransformers', () => {
   describe('transformLoginResponse', () => {
-    test('should transform response with token and user', () => {
-      const responseData = { token: 'abcd1234', user: { id: 1, name: 'Juan' } }
+    test('should transform response with token, user, and role', () => {
+      const responseData = {
+        access_token: {
+          access: 'Bearer abcd1234',
+          user: { id: 1, name: 'Juan', role: 'admin' }
+        }
+      }
       expect(transformLoginResponse(responseData)).toEqual({
-        token: 'abcd1234',
-        user: { id: 1, name: 'Juan' }
+        token: 'Bearer abcd1234',
+        user: { id: 1, name: 'Juan', role: 'admin' },
+        role: 'admin'
       })
     })
 
-    test('should return null for missing token and user', () => {
+    test('should handle missing or null data gracefully', () => {
       expect(transformLoginResponse({})).toEqual({
         token: null,
-        user: null
+        user: null,
+        role: null
+      })
+
+      expect(transformLoginResponse(null)).toEqual({
+        token: null,
+        user: null,
+        role: null
       })
     })
   })

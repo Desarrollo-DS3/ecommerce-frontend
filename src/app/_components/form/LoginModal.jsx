@@ -41,9 +41,10 @@ export default function LoginModal() {
     }
 
     try {
-      await login(email, password)
+      await login(email, password, setLoginError)
       closeModal()
     } catch (error) {
+      console.log(error)
       setLoginError('Credenciales incorrectas. Intenta nuevamente.')
     }
   }

@@ -69,6 +69,13 @@ export const listProducts = async (token) => {
   return transformListProductsResponse(response.data)
 }
 
+// Use listProducts() and get a product by id, if doesn't exist, return null
+export const getProductById = async (id, token) => {
+  const products = await listProducts(token)
+  const productId = Number(id)
+  return products.find((product) => product.id === productId)
+}
+
 // Función de carga de productos (mock)
 export const loadProducts = async () => {
   const module = await import('@/../public/mocks/products.json')
