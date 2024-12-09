@@ -1,4 +1,9 @@
+import { images as img } from '@/app/_config/assets.json'
+
 // src/app/_utils/stockTransformers.js
+
+const DEFAULT_IMAGE = img.unknownPackage
+const DEFAULT_THUMBNAIL = img.unknownPackage
 
 // Transformar respuesta de creación de marca
 export const transformCreateBrandResponse = (responseData) => {
@@ -22,7 +27,13 @@ export const transformCreateCategoryResponse = (responseData) => {
 export const transformAddProductResponse = (responseData) => {
   return {
     success: true,
-    product: responseData.product || null,
+    product: responseData.product
+      ? {
+          ...responseData.product,
+          thumbnail: responseData.product.thumbnail || DEFAULT_THUMBNAIL,
+          image: responseData.product.image || DEFAULT_IMAGE
+        }
+      : null,
     message: responseData.message || 'Producto agregado exitosamente.'
   }
 }
@@ -45,18 +56,29 @@ export const transformListCategoriesResponse = (categoriesData) => {
   }))
 }
 
-// Transformar respuesta de listado de productos
 export const transformListProductsResponse = (productsData) => {
   return productsData.map((product) => ({
     id: product.id,
     name: product.name,
-    categoryId: product.categoryId,
-    brandId: product.brand_id,
-    price: product.price,
-    stock: product.stock,
-    description: product.description,
-    thumbnail: product.thumbnail,
-    image: product.image
+    description: product.description || 'Descripción no disponible.',
+    price: product.price || 0,
+    stock: product.stock || 0,
+    brand: product.brand
+      ? {
+          id: product.brand.id,
+          name: product.brand.name || 'Marca no especificada',
+          description: product.brand.description || ''
+        }
+      : null,
+    category: product.category
+      ? {
+          id: product.category.id,
+          name: product.category.name || 'Categoría no especificada',
+          description: product.category.description || ''
+        }
+      : null,
+    thumbnail: product.thumbnail || DEFAULT_THUMBNAIL,
+    image: product.image || DEFAULT_IMAGE
   }))
 }
 
@@ -64,7 +86,13 @@ export const transformListProductsResponse = (productsData) => {
 export const transformSupplyProductResponse = (responseData) => {
   return {
     success: true,
-    product: responseData.product || null,
+    product: responseData.product
+      ? {
+          ...responseData.product,
+          thumbnail: responseData.product.thumbnail || DEFAULT_THUMBNAIL,
+          image: responseData.product.image || DEFAULT_IMAGE
+        }
+      : null,
     message: responseData.message || 'Producto suministrado exitosamente.'
   }
 }

@@ -5,6 +5,9 @@
     "arrowLeft": "/assets/icons/arrow-left.svg",
     "arrowRight": "/assets/icons/arrow-right.svg"
   },
+  "images": {
+    "unknownPackage": "/assets/images/unknown-package.png"
+  },
   "brands": {},
   "dev": {
     "test_png": "/assets/test.png"
