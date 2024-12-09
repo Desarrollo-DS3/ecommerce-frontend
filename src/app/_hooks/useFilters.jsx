@@ -11,7 +11,8 @@ export function useFilters() {
         product.name
           .toLowerCase()
           .includes(filters.includedString.toLowerCase()) &&
-        (filters.categoryId === -1 || product.categoryId === filters.categoryId)
+        (filters.categoryId === -1 ||
+          product.category.id === filters.categoryId)
       )
     })
   }
