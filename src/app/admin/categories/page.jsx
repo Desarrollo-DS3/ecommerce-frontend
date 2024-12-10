@@ -1,9 +1,9 @@
 import MainContent from '@/app/admin/_components/MainContent'
 import CategoryItem from '@/app/admin/categories/_components/CategoryItem'
-import { loadCategories } from '@/app/_api/stock'
+import { listCategories } from '@/app/_api/stock'
 
 export default async function AdminCategoriesPage() {
-  const items = await loadCategories()
+  const items = await listCategories()
 
   return (
     <>

@@ -1,9 +1,9 @@
-import { images as img } from '@/app/_config/assets.json'
+import { images } from '@/app/_config/assets.json'
 
 // src/app/_utils/stockTransformers.js
 
-const DEFAULT_IMAGE = img.unknownPackage
-const DEFAULT_THUMBNAIL = img.unknownPackage
+const DEFAULT_IMAGE = images.unknownPackage
+const DEFAULT_THUMBNAIL = images.unknownPackage
 
 // Transformar respuesta de creación de marca
 export const transformCreateBrandResponse = (responseData) => {
