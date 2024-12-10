@@ -1,8 +1,15 @@
 'use client'
+import { useState } from 'react'
 import { ReactSVG } from 'react-svg'
 import ic from '@/app/_config/assets.json'
+import ProductSupplyModal from '@/app/admin/products/_components/ProductSupplyModal'
 
-export default function ProductItem({ item }) {
+export default function ProductItem({ item, token }) {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const openModal = () => setIsModalOpen(true)
+  const closeModal = () => setIsModalOpen(false)
+
   return (
     <div className='flex items-center justify-between bg-gray-100 p-2 rounded-md shadow-sm'>
       {/* Imagen del producto */}
@@ -18,18 +25,23 @@ export default function ProductItem({ item }) {
       </div>
 
       {/* Botón de stock */}
-      <button className='relative flex items-center justify-center w-10 h-10 bg-orange-500 text-white rounded-full hover:bg-orange-600 transition duration-300'>
+      <button
+        className='relative flex items-center justify-center w-10 h-10 bg-orange-500 text-white rounded-full hover:bg-orange-600 transition duration-300'
+        onClick={openModal}
+      >
         <ReactSVG
           className='w-[60%] h-[60%] text-white transition group-hover:text-orange-500'
           src={ic.ui.edit}
           alt=''
-          onClick={() => {
-            console.log(
-              '[/admin/products/_components/ProductItem.jsx]: Not implemented yet'
-            )
-          }}
         />
       </button>
+
+      <ProductSupplyModal
+        product={item}
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        token={token}
+      />
     </div>
   )
 }
