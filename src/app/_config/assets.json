@@ -3,7 +3,9 @@
     "menu": "/assets/icons/menu.svg",
     "cart": "/assets/icons/shopping-cart.svg",
     "arrowLeft": "/assets/icons/arrow-left.svg",
-    "arrowRight": "/assets/icons/arrow-right.svg"
+    "arrowRight": "/assets/icons/arrow-right.svg",
+    "building": "/assets/icons/building.svg",
+    "edit": "/assets/icons/edit.svg"
   },
   "images": {
     "unknownPackage": "/assets/images/unknown-package.png"
