@@ -11,7 +11,7 @@ import {
   validateLastName
 } from '@/app/_utils/validations/personValidations'
 import RegisterForm from './components/RegisterForm'
-import withoutAuth from '@/app/_utils/withoutAuth'
+import withAuth from '@/app/_utils/withAuth'
 import { registerUser } from '@/app/_api/auth'
 
 function RegisterPage() {
@@ -136,4 +136,8 @@ function RegisterPage() {
   )
 }
 
-export default withoutAuth(RegisterPage)
+export default withAuth(RegisterPage, {
+  requireAuth: false,
+  unauthorizedRoles: ['*'],
+  redirectTo: '/'
+})
