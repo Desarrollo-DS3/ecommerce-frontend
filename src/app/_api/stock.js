@@ -1,7 +1,5 @@
 import { api } from '@/app/_utils/api'
 import {
-  transformCreateBrandResponse,
-  transformCreateCategoryResponse,
   transformAddProductResponse,
   transformListBrandsResponse,
   transformListCategoriesResponse,
@@ -14,7 +12,7 @@ export const createBrand = async (data, token) => {
   const response = await api.post('/stock/brand/create', data, {
     headers: { Authorization: `Bearer ${token}` }
   })
-  return transformCreateBrandResponse(response.data)
+  return response.data
 }
 
 // Función de creación de categoría
@@ -22,7 +20,7 @@ export const createCategory = async (data, token) => {
   const response = await api.post('/stock/category/create', data, {
     headers: { Authorization: `Bearer ${token}` }
   })
-  return transformCreateCategoryResponse(response.data)
+  return response.data
 }
 
 // Función de agregar producto
