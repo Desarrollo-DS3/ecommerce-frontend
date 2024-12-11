@@ -5,6 +5,7 @@ import BrandItem from '@/app/admin/brands/_components/BrandItem'
 import BrandCreateForm from '@/app/admin/brands/_components/BrandCreateForm'
 import { token } from '@/app/_contexts/auth'
 import { listBrands } from '@/app/_api/stock'
+import LoadingOverlay from '@/app/_components/ui/LoadingOverlay'
 
 export default function AdminBrandsPage() {
   const [items, setItems] = useState([])
@@ -33,7 +34,7 @@ export default function AdminBrandsPage() {
     />
   )
 
-  if (loading) return <p>Loading...</p>
+  if (loading) return <LoadingOverlay />
 
   return (
     <MainContent

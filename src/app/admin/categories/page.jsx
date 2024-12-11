@@ -5,6 +5,7 @@ import CategoryItem from '@/app/admin/categories/_components/CategoryItem'
 import CategoryCreateForm from '@/app/admin/categories/_components/CategoriesCreateForm.jsx'
 import { token } from '@/app/_contexts/auth'
 import { listCategories } from '@/app/_api/stock'
+import LoadingOverlay from '@/app/_components/ui/LoadingOverlay'
 
 export default function AdminCategoriesPage() {
   const [items, setItems] = useState([])
@@ -33,7 +34,7 @@ export default function AdminCategoriesPage() {
     />
   )
 
-  if (loading) return <p>Loading...</p>
+  if (loading) return <LoadingOverlay />
 
   return (
     <MainContent
