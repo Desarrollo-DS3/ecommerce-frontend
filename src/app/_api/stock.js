@@ -68,13 +68,17 @@ export const supplyProduct = async (data, token) => {
   const response = await api.post('/stock/product/supply', data, {
     headers: { Authorization: `${token}` }
   })
-  return transformSupplyProductResponse(response.data)
+  return response.data
 }
 
 // Función de comprar producto
 export const buyProduct = async (data, token) => {
-  const response = await api.post('/stock/product/buy', data, {
-    headers: { Authorization: `${token}` }
-  })
-  return transformSupplyProductResponse(response.data)
+  try {
+    const response = await api.post('/stock/product/buy', data, {
+      headers: { Authorization: `${token}` }
+    })
+    return response.data
+  } catch (error) {
+    console.log('Error response:', error.response.data.detail)
+  }
 }

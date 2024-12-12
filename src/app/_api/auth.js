@@ -2,8 +2,7 @@ import { api } from '@/app/_utils/api'
 import {
   transformLoginResponse,
   transformRegisterUserResponse,
-  transformRegisterWarehouseAssistantResponse,
-  transformLoadAuxiliariesResponse
+  transformRegisterWarehouseAssistantResponse
 } from '@/app/_utils/transformers/authTransformers'
 
 export const login = async (data) => {
@@ -34,9 +33,4 @@ export const registerUser = async (data) => {
 export const registerWarehouseAssistant = async (data) => {
   const response = await api.post('/auth/register/warehouse-assistant', data)
   return transformRegisterWarehouseAssistantResponse(response.data)
-}
-
-export const loadAuxiliaries = async () => {
-  const module = await import('@/../public/mocks/auxiliaries.json')
-  return transformLoadAuxiliariesResponse(module.auxiliaries)
 }
