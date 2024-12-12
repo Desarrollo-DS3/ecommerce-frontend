@@ -83,11 +83,9 @@ export function AuthProvider({ children }) {
         expires: 365 * 5
       })
 
-      console.log('Inicio de sesión exitoso:', { accessToken, userRole })
       router.push('/')
     } catch (error) {
-      setLoginError('Credenciales incorrectas. Intenta nuevamente.')
-      console.error('[authContext] Error en login:', error)
+      setLoginError('Verifique las credenciales e intente nuevamente.')
     }
   }
 
