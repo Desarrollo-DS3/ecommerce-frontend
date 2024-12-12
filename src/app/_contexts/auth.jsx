@@ -15,19 +15,35 @@ export function AuthProvider({ children }) {
   const [token, setToken] = useState(null)
   const [user, setUser] = useState(null)
   const [role, setRole] = useState(null)
+  const [isInitializing, setIsInitializing] = useState(true)
   const router = useRouter()
 
-  useEffect(() => {
-    const storedToken = Cookies.get(ACCESS_TOKEN)
-    const storedRole = Cookies.get(USER_ROLE)
+  const initializeAuthState = () => {
+    try {
+      const storedToken = Cookies.get(ACCESS_TOKEN)
+      const storedRole = Cookies.get(USER_ROLE)
 
-    if (storedToken) {
-      setIsLoggedIn(true)
-      setToken(storedToken)
-      setRole(storedRole || null)
-    } else {
+      if (storedToken) {
+        setIsLoggedIn(true)
+        setToken(decodeURIComponent(storedToken))
+        setRole(storedRole || null)
+      } else {
+        setIsLoggedIn(false)
+        setToken(null)
+        setRole(null)
+      }
+    } catch (error) {
+      console.error('[authContext] Error al inicializar el estado:', error)
       setIsLoggedIn(false)
+      setToken(null)
+      setRole(null)
+    } finally {
+      setIsInitializing(false)
     }
+  }
+
+  useEffect(() => {
+    initializeAuthState()
   }, [])
 
   const login = async (email, password, setLoginError) => {
@@ -41,10 +57,7 @@ export function AuthProvider({ children }) {
         token: accessToken,
         user: userInfo,
         role: userRole
-      } = await apiLogin({
-        email,
-        password
-      })
+      } = await apiLogin({ email, password })
 
       if (!accessToken || !userRole) {
         setLoginError('Error al procesar la respuesta del servidor.')
@@ -56,7 +69,7 @@ export function AuthProvider({ children }) {
       setUser(userInfo)
       setRole(userRole)
 
-      Cookies.set(ACCESS_TOKEN, accessToken, {
+      Cookies.set(ACCESS_TOKEN, encodeURIComponent(accessToken), {
         path: '/',
         secure: true,
         sameSite: 'strict',
@@ -92,7 +105,16 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn, token, user, role, login, logout, isAuthenticated }}
+      value={{
+        isLoggedIn,
+        token,
+        user,
+        role,
+        isInitializing,
+        login,
+        logout,
+        isAuthenticated
+      }}
     >
       {children}
     </AuthContext.Provider>

@@ -4,22 +4,61 @@ import { useContext, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { AuthContext } from '@/app/_contexts/auth'
 
-export default function withAuth(Component) {
+export default function withAuth(
+  Component,
+  {
+    authorizedRoles = null,
+    unauthorizedRoles = null,
+    requireAuth = true,
+    redirectTo = '/'
+  } = {}
+) {
   return function WithAuth(props) {
-    const { isAuthenticated } = useContext(AuthContext)
+    const { isInitializing, isAuthenticated, role } = useContext(AuthContext)
     const [isLoading, setIsLoading] = useState(true)
     const router = useRouter()
 
     useEffect(() => {
-      if (!isAuthenticated()) {
-        router.push('/')
-      } else {
-        setIsLoading(false)
-      }
-    }, [isAuthenticated, router])
+      if (isInitializing) return
 
-    if (isLoading) {
-      return null
+      const isUserAuthenticated = isAuthenticated()
+
+      if (requireAuth && !isUserAuthenticated) {
+        console.log('No autenticado. Redirigiendo a:', redirectTo)
+        router.push(redirectTo)
+        return
+      }
+
+      if (
+        unauthorizedRoles &&
+        ((unauthorizedRoles.includes('*') && role) ||
+          unauthorizedRoles.includes(role))
+      ) {
+        console.log('Rol no autorizado:', role)
+        router.push(redirectTo)
+        return
+      }
+
+      if (authorizedRoles && (!role || !authorizedRoles.includes(role))) {
+        console.log('Rol no permitido:', role)
+        router.push(redirectTo)
+        return
+      }
+
+      setIsLoading(false)
+    }, [
+      isInitializing,
+      isAuthenticated,
+      role,
+      authorizedRoles,
+      unauthorizedRoles,
+      requireAuth,
+      redirectTo,
+      router
+    ])
+
+    if (isInitializing || isLoading) {
+      return <div>Cargando...</div>
     }
 
     return <Component {...props} />

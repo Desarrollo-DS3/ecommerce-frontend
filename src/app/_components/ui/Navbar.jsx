@@ -18,7 +18,7 @@ export default function Navbar() {
   const { turnOn: turnOnLoginModal } = useLoginModalState()
   const { isOpen, setIsOpen } = useSidebarState()
   const { filters, setFilters } = useFilters()
-  const { isLoggedIn, logout } = useAuth() // Usar contexto de autenticación
+  const { isLoggedIn, role, logout } = useAuth()
 
   const handleMouseEnter = () => {
     clearTimeout(dropdownTimeout.current)
@@ -101,8 +101,8 @@ export default function Navbar() {
             )}
             {isLoggedIn && (
               <button
-                onClick={logout} // Llama directamente a la función del contexto
-                className='block px-4 py-2 hover:bg-gray-100'
+                onClick={logout}
+                className='block px-4 py-2 hover:bg-gray-100 w-full'
               >
                 Cerrar Sesión
               </button>
@@ -111,7 +111,7 @@ export default function Navbar() {
         )}
       </div>
 
-      {/* cart button */}
+      {/* cart button
       {isLoggedIn && (
         <div className='mr-6'>
           <Link
@@ -122,6 +122,22 @@ export default function Navbar() {
               className='text-white fill-none hover:fill-black'
               src={ic.ui.cart}
               alt='cart-button'
+            />
+          </Link>
+        </div>
+      )} */}
+
+      {/* Admin button to /admin routes */}
+      {role === 'warehouse_assistant' && (
+        <div className='mr-6'>
+          <Link
+            href='/admin'
+            className='text-white hover:text-gray-900 transition'
+          >
+            <ReactSVG
+              className='text-white fill-none hover:opacity-100'
+              src={ic.ui.building}
+              alt='admin-dashboard'
             />
           </Link>
         </div>
