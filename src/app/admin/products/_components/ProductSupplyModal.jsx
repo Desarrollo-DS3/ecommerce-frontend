@@ -44,12 +44,12 @@ export default function ProductSupplyModal({
     <div className='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50'>
       <div className='bg-white p-6 rounded-lg shadow-lg'>
         <h2 className='text-lg font-semibold mb-4'>
-          Supply Product: {product.name}
+          Suministrar Producto: {product.name.slice(0, 20)}
         </h2>
         <form onSubmit={handleSubmit} className='space-y-4'>
           <div>
             <label htmlFor='quantity' className='block text-sm font-medium'>
-              Quantity to add
+              Cantidad a agregar
             </label>
             <input
               type='number'
@@ -69,16 +69,16 @@ export default function ProductSupplyModal({
               onClick={onClose}
               className='px-4 py-2 bg-gray-300 text-black rounded-md'
             >
-              Cancel
+              Cancelar
             </button>
             <button
               type='submit'
               disabled={loading}
               className={`px-4 py-2 rounded-md ${
-                loading ? 'bg-gray-400' : 'bg-blue-500'
+                loading ? 'bg-gray-400' : 'bg-orange-500'
               } text-white`}
             >
-              {loading ? 'Processing...' : 'Submit'}
+              {loading ? 'Procesando...' : 'Suministrar'}
             </button>
           </div>
         </form>

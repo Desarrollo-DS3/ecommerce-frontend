@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { use, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useLoginModalState } from '@/app/_states/LoginFormState'
 import { useAuth } from '@/app/_hooks/useAuth'
@@ -8,15 +8,17 @@ import {
   validateEmail,
   validatePassword
 } from '@/app/_utils/validations/personValidations'
+import LoadingOverlay from '@/app/_components/ui/LoadingOverlay'
 
 export default function LoginModal() {
   const { isModalOpen, turnOff } = useLoginModalState()
-  const { login } = useAuth()
+  const { login, isLoggedIn } = useAuth()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [emailError, setEmailError] = useState('')
   const [passwordError, setPasswordError] = useState('')
   const [loginError, setLoginError] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const closeModal = () => turnOff()
 
@@ -35,19 +37,41 @@ export default function LoginModal() {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
+    setLoginError('')
+
     if (emailError || passwordError || !email || !password) {
       setLoginError('Por favor, corrige los errores antes de continuar.')
       return
     }
 
     try {
+      setLoading(true)
       await login(email, password, setLoginError)
-      closeModal()
     } catch (error) {
-      console.log(error)
       setLoginError('Credenciales incorrectas. Intenta nuevamente.')
     }
+    setLoading(false)
   }
+
+  function resetForm() {
+    setEmail('')
+    setPassword('')
+    setLoginError('')
+  }
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      closeModal()
+    }
+  }, [isLoggedIn])
+
+  useEffect(() => {
+    if (isModalOpen) {
+      resetForm()
+    }
+  }, [isModalOpen])
+
+  if (loading) return <LoadingOverlay />
 
   return (
     <>
