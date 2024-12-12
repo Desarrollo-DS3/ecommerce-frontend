@@ -1,26 +1,31 @@
 'use client'
-import { createContext, useState, useEffect } from 'react'
-import { listCategories } from '@/app/_api/stock'
 
-// 1. Crear el contexto de categorías
+import { createContext, useState, useEffect, useContext } from 'react'
+import { listCategories } from '@/app/_api/stock'
+import { AuthContext } from '@/app/_contexts/auth'
+
 export const CategoriesContext = createContext()
 
-// 2. Proveedor del contexto
 export function CategoriesProvider({ children }) {
+  const { token, isInitializing } = useContext(AuthContext)
   const [categories, setCategories] = useState([])
 
   useEffect(() => {
-    if (categories.length === 0) {
-      listCategories().then((fetchedCategories) => {
-        const allCategory = {
-          id: -1,
-          name: 'all',
-          description: 'All categories'
-        }
-        setCategories([allCategory, ...fetchedCategories])
-      })
+    if (!isInitializing && token && categories.length === 0) {
+      listCategories(token)
+        .then((fetchedCategories) => {
+          const allCategory = {
+            id: -1,
+            name: 'all',
+            description: 'All categories'
+          }
+          setCategories([allCategory, ...fetchedCategories])
+        })
+        .catch((error) => {
+          console.error('Error fetching categories:', error)
+        })
     }
-  }, [categories])
+  }, [categories, token, isInitializing])
 
   return (
     <CategoriesContext.Provider value={{ categories, setCategories }}>

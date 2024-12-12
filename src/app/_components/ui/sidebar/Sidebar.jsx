@@ -5,7 +5,7 @@ import CategoriesList from '@/app/_components/ui/sidebar/CategoriesList'
 
 export default function Sidebar() {
   const pathname = usePathname()
-  const { isOpen, setIsOpen } = useSidebarState() // Asegúrate de que setIsOpen esté disponible
+  const { isOpen, setIsOpen } = useSidebarState()
 
   return (
     <div>

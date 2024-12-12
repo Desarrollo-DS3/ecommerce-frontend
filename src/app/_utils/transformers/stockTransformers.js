@@ -82,6 +82,44 @@ export const transformListProductsResponse = (productsData) => {
   }))
 }
 
+export const transformGetProductByIdResponse = (responseData) => {
+  if (!responseData || typeof responseData !== 'object') {
+    return {
+      success: false,
+      product: null,
+      message: 'No se pudo encontrar el producto.'
+    }
+  }
+
+  return {
+    success: true,
+    product: {
+      id: responseData.id,
+      name: responseData.name,
+      description: responseData.description,
+      price: responseData.price,
+      stock: responseData.stock,
+      brand: responseData.brand
+        ? {
+            id: responseData.brand.id,
+            name: responseData.brand.name,
+            description: responseData.brand.description
+          }
+        : null,
+      category: responseData.category
+        ? {
+            id: responseData.category.id,
+            name: responseData.category.name,
+            description: responseData.category.description
+          }
+        : null,
+      thumbnail: responseData.thumbnail || DEFAULT_THUMBNAIL,
+      image: responseData.image || DEFAULT_IMAGE
+    },
+    message: 'Producto encontrado exitosamente.'
+  }
+}
+
 // Transformar respuesta de suministro de producto
 export const transformSupplyProductResponse = (responseData) => {
   return {
@@ -94,5 +132,20 @@ export const transformSupplyProductResponse = (responseData) => {
         }
       : null,
     message: responseData.message || 'Producto suministrado exitosamente.'
+  }
+}
+
+// Transformar respuesta de comprar producto
+export const transformBuyProductResponse = (responseData) => {
+  return {
+    success: true,
+    product: responseData.product
+      ? {
+          ...responseData.product,
+          thumbnail: responseData.product.thumbnail || DEFAULT_THUMBNAIL,
+          image: responseData.product.image || DEFAULT_IMAGE
+        }
+      : null,
+    message: responseData.message || 'Producto comprado exitosamente.'
   }
 }

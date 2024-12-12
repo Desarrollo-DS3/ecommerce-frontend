@@ -32,7 +32,6 @@ export default function ProductSupplyModal({
       onClose()
     } catch (err) {
       setError('Failed to supply product. Please try again.')
-      console.log(err)
     } finally {
       setLoading(false)
     }
