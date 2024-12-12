@@ -5,7 +5,8 @@
     "arrowLeft": "/assets/icons/arrow-left.svg",
     "arrowRight": "/assets/icons/arrow-right.svg",
     "building": "/assets/icons/building.svg",
-    "edit": "/assets/icons/edit.svg"
+    "edit": "/assets/icons/edit.svg",
+    "eyeHide": "/assets/icons/eye-hide.svg"
   },
   "images": {
     "unknownPackage": "/assets/images/unknown-package.png"
