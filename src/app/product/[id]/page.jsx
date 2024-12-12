@@ -41,7 +41,7 @@ export default function ProductPage() {
       )
       router.push('/')
     } catch (error) {
-      if (process.env.ENVIRONMENT === 'development') console.error(error)
+      console.error('Error al realizar la compra')
     }
   }
 
