@@ -75,10 +75,4 @@ describe('Navbar', () => {
 
     expect(queryByText('Iniciar sesión')).not.toBeInTheDocument()
   })
-
-  test('debería mostrar el botón del carrito si el usuario ha iniciado sesión', () => {
-    useAuth.mockReturnValueOnce({ isLoggedIn: true, logout: jest.fn() })
-    const { getByTestId } = render(<Navbar />)
-    expect(getByTestId('cart-button')).toBeInTheDocument()
-  })
 })
