@@ -102,10 +102,11 @@ export default function WarehouseAssistantRegisterPage() {
         <form onSubmit={handleSubmit} noValidate>
           <div className='space-y-4'>
             <div>
-              <label className='block font-semibold mb-1'>
+              <label htmlFor='email' className='block font-semibold mb-1'>
                 Correo <span className='text-red-500'>*</span>
               </label>
               <input
+                id='email'
                 type='email'
                 name='email'
                 value={formData.email}
@@ -118,10 +119,11 @@ export default function WarehouseAssistantRegisterPage() {
             </div>
 
             <div>
-              <label className='block font-semibold mb-1'>
+              <label htmlFor='first_name' className='block font-semibold mb-1'>
                 Nombres <span className='text-red-500'>*</span>
               </label>
               <input
+                id='first_name'
                 type='text'
                 name='first_name'
                 value={formData.first_name}
@@ -134,10 +136,11 @@ export default function WarehouseAssistantRegisterPage() {
             </div>
 
             <div>
-              <label className='block font-semibold mb-1'>
+              <label htmlFor='last_name' className='block font-semibold mb-1'>
                 Apellidos <span className='text-red-500'>*</span>
               </label>
               <input
+                id='last_name'
                 type='text'
                 name='last_name'
                 value={formData.last_name}
@@ -150,11 +153,12 @@ export default function WarehouseAssistantRegisterPage() {
             </div>
 
             <div>
-              <label className='block font-semibold mb-1'>
+              <label htmlFor='password' className='block font-semibold mb-1'>
                 Contraseña <span className='text-red-500'>*</span>
               </label>
               <div className='relative flex border'>
                 <input
+                  id='password'
                   type={showPassword ? 'text' : 'password'}
                   name='password'
                   value={formData.password}
@@ -169,8 +173,7 @@ export default function WarehouseAssistantRegisterPage() {
                   <ReactSVG
                     className={`w-4 fill-current fit-content ${
                       showPassword ? 'text-gray-600' : 'text-orange-600'
-                    }
-                      `}
+                    }`}
                     about='eye-hide'
                     src={ic.ui.eyeHide}
                   />

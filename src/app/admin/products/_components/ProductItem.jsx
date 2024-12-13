@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ReactSVG } from 'react-svg'
 import ic from '@/app/_config/assets.json'
 import ProductSupplyModal from '@/app/admin/products/_components/ProductSupplyModal'
@@ -9,6 +9,8 @@ export default function ProductItem({ item, token }) {
 
   const openModal = () => setIsModalOpen(true)
   const closeModal = () => setIsModalOpen(false)
+
+  useEffect(() => {}, [isModalOpen])
 
   return (
     <div className='flex items-center justify-between bg-gray-100 p-2 rounded-md shadow-sm'>

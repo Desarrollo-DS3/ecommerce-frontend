@@ -91,12 +91,14 @@ export default function Navbar() {
                 >
                   Iniciar sesión
                 </Link>
-                <Link
-                  href='/register'
-                  className='block px-4 py-2 hover:bg-gray-100'
-                >
-                  Registrarse
-                </Link>
+                {pathname !== '/register' && (
+                  <Link
+                    href='/register'
+                    className='block px-4 py-2 hover:bg-gray-100'
+                  >
+                    Registrarse
+                  </Link>
+                )}
               </>
             )}
             {isLoggedIn && (

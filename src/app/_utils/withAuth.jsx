@@ -24,7 +24,6 @@ export default function withAuth(
       const isUserAuthenticated = isAuthenticated()
 
       if (requireAuth && !isUserAuthenticated) {
-        console.log('No autenticado. Redirigiendo a:', redirectTo)
         router.push(redirectTo)
         return
       }
@@ -34,13 +33,11 @@ export default function withAuth(
         ((unauthorizedRoles.includes('*') && role) ||
           unauthorizedRoles.includes(role))
       ) {
-        console.log('Rol no autorizado:', role)
         router.push(redirectTo)
         return
       }
 
       if (authorizedRoles && (!role || !authorizedRoles.includes(role))) {
-        console.log('Rol no permitido:', role)
         router.push(redirectTo)
         return
       }

@@ -1,45 +1,50 @@
 'use client'
-import { useEffect, useState } from 'react'
+
+import { useEffect, useState, useContext } from 'react'
 import MainContent from '@/app/admin/_components/MainContent'
 import CategoryItem from '@/app/admin/categories/_components/CategoryItem'
 import CategoryCreateForm from '@/app/admin/categories/_components/CategoriesCreateForm.jsx'
-import { token } from '@/app/_contexts/auth'
 import { listCategories } from '@/app/_api/stock'
 import LoadingOverlay from '@/app/_components/ui/LoadingOverlay'
+import { AuthContext } from '@/app/_contexts/auth'
 
 export default function AdminCategoriesPage() {
+  const { token, isInitializing } = useContext(AuthContext)
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const categories = await listCategories()
-        setItems(categories)
-      } catch (error) {
+  const fetchCategories = (currentToken) => {
+    setLoading(true)
+    listCategories(currentToken)
+      .then((categories) => setItems(categories))
+      .catch((error) => {
         console.error('Error fetching categories:', error)
-      } finally {
-        setLoading(false)
-      }
-    }
+      })
+      .finally(() => setLoading(false))
+  }
 
-    fetchData()
-  }, [])
+  useEffect(() => {
+    if (!isInitializing && token) {
+      fetchCategories(token)
+    }
+  }, [isInitializing, token])
 
   const CreateComponent = (props) => (
     <CategoryCreateForm
       {...props}
       token={token}
-      refreshCategories={() => window.location.reload()}
+      refreshCategories={() => fetchCategories(token)}
     />
   )
 
-  if (loading) return <LoadingOverlay />
+  if (isInitializing || loading) return <LoadingOverlay />
 
   return (
     <MainContent
       items={items}
-      ItemComponent={CategoryItem}
+      ItemComponent={(itemProps) => (
+        <CategoryItem {...itemProps} token={token} />
+      )}
       CreateComponent={CreateComponent}
     />
   )

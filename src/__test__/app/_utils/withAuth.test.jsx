@@ -1,4 +1,4 @@
-import { render, screen, act } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { AuthContext } from '@/app/_contexts/auth'
 import withAuth from '@/app/_utils/withAuth'
 import { useRouter } from 'next/navigation'
@@ -17,8 +17,11 @@ describe('withAuth', () => {
     const mockPush = jest.fn()
     useRouter.mockReturnValue({ push: mockPush })
 
+    // Contexto simulado: no autenticado
     const mockAuthContext = {
-      isAuthenticated: jest.fn().mockReturnValue(false)
+      isInitializing: false,
+      isAuthenticated: jest.fn().mockReturnValue(false),
+      role: null
     }
 
     render(
@@ -31,8 +34,11 @@ describe('withAuth', () => {
   })
 
   test('debería renderizar el componente si el usuario está autenticado', () => {
+    // Contexto simulado: autenticado
     const mockAuthContext = {
-      isAuthenticated: jest.fn().mockReturnValue(true)
+      isInitializing: false,
+      isAuthenticated: jest.fn().mockReturnValue(true),
+      role: 'user' // Puedes agregar cualquier rol aquí si es necesario
     }
 
     render(
