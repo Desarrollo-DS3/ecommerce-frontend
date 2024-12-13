@@ -12,3 +12,8 @@ services:
       - /app/node_modules
     environment:
       - NEXT_PUBLIC_API_URL=http://host.docker.internal:8000/api/:path*
+    command: 
+      - sh
+      - -c
+      - "node --run build && node --run start" 
+      # Desarrollo: - "node --run dev"
