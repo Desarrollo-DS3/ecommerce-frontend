@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   images: {
     domains: ['example.com']
   },
@@ -11,7 +11,16 @@ const nextConfig = {
     })
     return config
   },
-  output: 'standalone'
+  output: 'standalone',
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination:
+          process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/:path*'
+      }
+    ]
+  }
 }
 
 export default nextConfig
